@@ -11,13 +11,6 @@ const createEcog = () => ({
   ecogDate: "",
 });
 
-const createTreatment = () => ({
-  id: uuid(),
-  type: "",
-  treatmentDate: "",
-  surgicalCode: [],
-});
-
 const FormTabs = () => {
   const [activeTab, setActiveTab] = useState("form");
 
@@ -32,40 +25,32 @@ const FormTabs = () => {
     diagnosBasis: "",
   });
 
-  const [treatments, setTreatments] = useState([createTreatment()]);
   const [ecogs, setEcogs] = useState([createEcog()]);
 
-  const handleAddNewLine = (type) => {
-    type === "treatment"
-      ? setTreatments((prev) => [...prev, createTreatment()])
-      : setEcogs((prev) => [...prev, createEcog()]);
+  const addEcog = () => {
+    setEcogs((prev) => [...prev, createEcog()]);
   };
 
-  function handleRemoveLine(type, index) {
-    type === "treatment"
-      ? setTreatments((prev) => prev.filter((_, i) => index !== i))
-      : setEcogs((prev) => prev.filter((_, i) => i !== index));
-  }
+  const removeECOG = (id) => {
+    setEcogs((prev) => prev.filter((ecog) => ecog.id !== id));
+  };
 
   const renderContent = () => {
-    switch (activeTab) {
-      case "form":
-        return (
-          <EnrollmentForm
-            patient={patient}
-            setPatient={setPatient}
-            diagnosData={diagnosData}
-            setDiagnosData={setDiagnosData}
-            treatments={treatments}
-            setTreatments={setTreatments}
-            ecogs={ecogs}
-            setEcogs={setEcogs}
-            handleAddNewLine={handleAddNewLine}
-            handleRemoveLine={handleRemoveLine}
-          />
-        );
-      case "overview":
-        return <EnrollmentOverview diagnosData={diagnosData} ecogs={ecogs} />;
+    {
+      return activeTab === "form" ? (
+        <EnrollmentForm
+          patient={patient}
+          setPatient={setPatient}
+          diagnosData={diagnosData}
+          setDiagnosData={setDiagnosData}
+          ecogs={ecogs}
+          setEcogs={setEcogs}
+          addEcog={addEcog}
+          removeECOG={removeECOG}
+        />
+      ) : (
+        <EnrollmentOverview diagnosData={diagnosData} ecogs={ecogs} />
+      );
     }
   };
 

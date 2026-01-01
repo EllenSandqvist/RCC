@@ -9,6 +9,7 @@ const InputField = ({
   handleChange,
   handleBlur,
   errors,
+  max = "",
 }) => {
   return (
     <input
@@ -19,6 +20,7 @@ const InputField = ({
       value={value}
       onChange={handleChange}
       onBlur={handleBlur}
+      max={max}
       className={errors[name] ? styles.error : ""}
       required
     />
