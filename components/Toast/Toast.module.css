@@ -1,0 +1,11 @@
+.toast {
+  border: 2px solid;
+}
+
+.toast_message {
+  color: red;
+}
+
+.close_btn {
+  background-color: blue;
+}

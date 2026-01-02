@@ -5,6 +5,7 @@ import PatientFields from "../PatientFields.jsx";
 import DiagnosFields from "../DiagnosFields.jsx";
 import TreatmentFields from "../TreatmentFields.jsx";
 import EcogFields from "../EcogFields.jsx";
+import Toast from "../Toast/Toast.jsx";
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -62,12 +63,16 @@ const EnrollmentForm = ({
     ecogs: ecogs.map(({ ecogDate, ecogScore }) => ({ ecogDate, ecogScore })),
   });
 
+  const onClose = () => {
+    console.log("close toast");
+  };
+
   // --- Handler for submit ---
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (Object.keys(errors).length > 0) {
-      //Fixa en modal för errormeddelande istället för alert!
+      //Show error toast...
       alert("Det finns errors som måste rättas till innan du kan spara");
       return;
     }
@@ -90,6 +95,7 @@ const EnrollmentForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
+      <Toast onClose={onClose} />
       <h2>Registreringsformulär</h2>
       <p>
         För att kunna spara formuläret måste alla fält vara ifyllda.

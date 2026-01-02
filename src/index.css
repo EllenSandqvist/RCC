@@ -1,0 +1,40 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Base colors */
+  --primary-dark: #171717;
+  --secondary-grey: #5d5d5d;
+  --background-grey-light: #ececec;
+  --background-color-lightest: #fff;
+
+  /* Accent colors */
+  /* --accent-color: #fef100;
+  --accent-outline: #fccb4f; */
+
+  /* Complement colors */
+  --tertiary-purple: #cfb6ee;
+  --tertiary-outline: #9c7fbf;
+  --pastel-mint: #c3f0d4;
+  --pastel-mint-outline: #739680;
+
+  /* Fonts */
+  --font-heading: "Segoe UI", Tahoma, Geneva, sans-serif;
+  --font-base: Calibri, "Times new roman", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-base);
+  line-height: 1.5;
+  background-color: var(--background-color-lightest);
+  color: var(--primary-dark);
+}
