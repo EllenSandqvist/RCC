@@ -13,11 +13,13 @@ const TreatmentFields = ({
   setTreatments,
   addTreatment,
   removeTreatment,
+  setToast,
 }) => {
   const handleChangeTreatment = ({ target }) => {
     const { dataset, name, value } = target;
 
     // clear previous errors
+    setToast(null);
     clearErrorOnChange(dataset.name);
 
     // clear surgicalCode errors if treatment type is changed
@@ -116,7 +118,9 @@ const TreatmentFields = ({
               className={errors[`type-${treatment.id}`] ? styles.error : ""}
               required
             >
-              <option value="">Välj</option>
+              <option value="" disabled>
+                --- Välj ett alternativ ---
+              </option>
               <option value="surgery">Kirurgi</option>
               <option value="radiotherapy">Strålbehandling</option>
               <option value="chemotherapy">Cytostatika</option>

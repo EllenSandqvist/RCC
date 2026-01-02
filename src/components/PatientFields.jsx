@@ -6,10 +6,12 @@ const PatientFields = ({
   errors,
   clearErrorOnChange,
   validateInput,
+  setToast,
 }) => {
   const handlePatientChange = ({ target }) => {
     const { value, name } = target;
 
+    setToast(null);
     clearErrorOnChange(name);
     setPatient((prev) => ({ ...prev, [name]: value }));
   };

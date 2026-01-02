@@ -16,6 +16,12 @@ const createTreatment = () => ({
   surgicalCode: [],
 });
 
+const toastMessage = {
+  error:
+    "Formuläret är inte korrekt ifyllt. Rätta de rödmarkerade fälten innan du sparar.",
+  success: "Formuläret har sparats.",
+};
+
 const EnrollmentForm = ({
   patient,
   setPatient,
@@ -31,6 +37,8 @@ const EnrollmentForm = ({
   const [surgicalCodeInput, setSurgicalCodeInput] = useState(
     treatments.map((t) => ({ id: t.id, input: "" }))
   );
+
+  const [toast, setToast] = useState(null);
 
   const {
     errors,
@@ -63,20 +71,16 @@ const EnrollmentForm = ({
     ecogs: ecogs.map(({ ecogDate, ecogScore }) => ({ ecogDate, ecogScore })),
   });
 
-  const onClose = () => {
-    console.log("close toast");
-  };
-
   // --- Handler for submit ---
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (Object.keys(errors).length > 0) {
-      //Show error toast...
-      alert("Det finns errors som måste rättas till innan du kan spara");
+      setToast({ type: "error", message: toastMessage.error });
       return;
     }
 
+    setToast(null);
     const formData = buildFormData();
 
     //Fixa en modal istället för confirm!
@@ -86,7 +90,7 @@ const EnrollmentForm = ({
       2
     )}`;
     if (confirm(confirmText)) {
-      alert("Formuläret har sparats...");
+      setToast({ type: "success", message: toastMessage.success });
       window.inca = formData;
     } else {
       alert("Formuläret är inte sparat");
@@ -94,59 +98,71 @@ const EnrollmentForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Toast onClose={onClose} />
-      <h2>Registreringsformulär</h2>
-      <p>
-        För att kunna spara formuläret måste alla fält vara ifyllda.
-        Behandlings- eller ECOG-rader som inte behövs ska tas bort innan
-        sparning.
-      </p>
+    <>
+      <form onSubmit={handleSubmit}>
+        <h2>Registreringsformulär</h2>
+        <p>
+          För att kunna spara formuläret måste alla fält vara ifyllda.
+          Behandlings- eller ECOG-rader som inte behövs ska tas bort innan
+          sparning.
+        </p>
 
-      <PatientFields
-        patient={patient}
-        setPatient={setPatient}
-        errors={errors}
-        clearErrorOnChange={clearErrorOnChange}
-        validateInput={validateInput}
-      />
+        <PatientFields
+          patient={patient}
+          setPatient={setPatient}
+          errors={errors}
+          clearErrorOnChange={clearErrorOnChange}
+          validateInput={validateInput}
+          setToast={setToast}
+        />
 
-      <DiagnosFields
-        diagnosData={diagnosData}
-        setDiagnosData={setDiagnosData}
-        errors={errors}
-        clearErrorOnChange={clearErrorOnChange}
-        today={today}
-        validateInput={validateInput}
-      />
+        <DiagnosFields
+          diagnosData={diagnosData}
+          setDiagnosData={setDiagnosData}
+          errors={errors}
+          clearErrorOnChange={clearErrorOnChange}
+          today={today}
+          validateInput={validateInput}
+          setToast={setToast}
+        />
 
-      <TreatmentFields
-        treatments={treatments}
-        today={today}
-        errors={errors}
-        clearErrorOnChange={clearErrorOnChange}
-        validateTreatment={validateTreatment}
-        surgicalCodeInput={surgicalCodeInput}
-        setSurgicalCodeInput={setSurgicalCodeInput}
-        validateSurgicalCode={validateSurgicalCode}
-        setTreatments={setTreatments}
-        addTreatment={addTreatment}
-        removeTreatment={removeTreatment}
-      />
+        <TreatmentFields
+          treatments={treatments}
+          today={today}
+          errors={errors}
+          clearErrorOnChange={clearErrorOnChange}
+          validateTreatment={validateTreatment}
+          surgicalCodeInput={surgicalCodeInput}
+          setSurgicalCodeInput={setSurgicalCodeInput}
+          validateSurgicalCode={validateSurgicalCode}
+          setTreatments={setTreatments}
+          addTreatment={addTreatment}
+          removeTreatment={removeTreatment}
+          setToast={setToast}
+        />
 
-      <EcogFields
-        ecogs={ecogs}
-        setEcogs={setEcogs}
-        today={today}
-        clearErrorOnChange={clearErrorOnChange}
-        errors={errors}
-        validateEcog={validateEcog}
-        addEcog={addEcog}
-        removeECOG={removeECOG}
-      />
+        <EcogFields
+          ecogs={ecogs}
+          setEcogs={setEcogs}
+          today={today}
+          clearErrorOnChange={clearErrorOnChange}
+          errors={errors}
+          validateEcog={validateEcog}
+          addEcog={addEcog}
+          removeECOG={removeECOG}
+          setToast={setToast}
+        />
 
-      <button type="submit">Spara</button>
-    </form>
+        <button type="submit">Spara</button>
+      </form>
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
+    </>
   );
 };
 

@@ -9,10 +9,12 @@ const DiagnosFields = ({
   clearErrorOnChange,
   today,
   validateInput,
+  setToast,
 }) => {
   const handleDiagnosChange = ({ target }) => {
     const { value, name } = target;
 
+    setToast(null);
     clearErrorOnChange(name);
     setDiagnosData((prev) => ({ ...prev, [name]: value }));
   };
@@ -46,11 +48,13 @@ const DiagnosFields = ({
           className={errors["diagnosBasis"] ? styles.error : ""}
           required
         >
-          <option value="">Välj</option>
+          <option value="" disabled>
+            --- Välj ett alternativ ---
+          </option>
           <option value="pad">PAD</option>
           <option value="cytologi">Cytologi</option>
-          <option value="x-ray">X-ray</option>
-          <option value="clinicalExam">Clinical Examination</option>
+          <option value="x-ray">Röntgen</option>
+          <option value="clinicalExam">Klinisk undersökning</option>
         </select>
       </label>
       {errors.diagnosBasis && <p>{errors.diagnosBasis}</p>}

@@ -12,12 +12,14 @@ const EcogFields = ({
   validateEcog,
   addEcog,
   removeECOG,
+  setToast,
 }) => {
   // --- Handler for changes in ECOG ---
   const handleChangeEcog = ({ target }) => {
     const { dataset, name, value } = target;
 
     // clear previous errors
+    setToast(null);
     clearErrorOnChange(name);
 
     setEcogs((prev) =>

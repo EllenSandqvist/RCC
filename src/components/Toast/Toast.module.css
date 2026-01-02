@@ -1,0 +1,32 @@
+.toast {
+  position: fixed;
+  top: 1.5em;
+  right: 50%;
+  transform: translateX(50%);
+  border-radius: 0.5em;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.error {
+  background-color: #e84e43;
+}
+
+.success {
+  background-color: #4caf50;
+}
+
+.toast_message {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 1em 1.5em;
+}
+
+.close_btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: grid;
+  place-items: center;
+}
