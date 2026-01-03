@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const displayNames = {
   personalNum: "Personnummer",
   firstName: "Förnamn",
@@ -15,9 +13,7 @@ const displayNames = {
 
 const isValidRegex = (value, regex) => regex.test(value);
 
-const useValidation = () => {
-  const [errors, setErrors] = useState({});
-
+const useValidation = ({ errors, setErrors }) => {
   const validateInput = (value, elementName) => {
     let message;
     const trimmedValue = value.trim();
@@ -133,3 +129,6 @@ export default useValidation;
 // 2. Hade först inget state för surgicalCodeInput utan la in koderna direkt under treatments.surgicalCode. Ställde till problem vid validering och det blev också lite rörigt med datatyperna, det är en array i mitt treatmentstate, men används som en string i UI:t. Genom att separera staten kan jag avvakta och bara spara korrekt data i mitt treatment state.
 // 3. Iom att jag använder radiobuttons för ECOG måste namnet för dessa vara unikt för varje rad, annars går det bara att sätta ett värde. Av denna anledning används name/data-name lite omväxlande i olika delar av koden
 // 4. Jag har antagit att behandligar registeras i efterhand och har därför valt att datum inte kan sättas framåt i tiden
+// 5. Lade treatments-statet i FormTabs, trots att det egentligen går bra att lägga i EnrollmentForm. Detta för att de värden man matar in ska finnas kvar om man hoppar mellan flikarna
+// 6. surgicalCodeInput – Hade stora problem med att värden försvann när jag växlade flikar. Berodde på att jag inte ändrat sättet som jag satt value på den inputen sedan jag använda treatment.surgicalCode direkt mot inputfältet. Eftersom surgicalCodeInput är en array måste jag i value hitta det id som matchar det aktuella treatment id:et.
+// 7. Jag hade först lagt mitt error-state i min useValidation-hook. Det gjorde att error tappades om man växlade mellan flikarna, så jag blev tvungen att flytta upp statet till FormTabs.

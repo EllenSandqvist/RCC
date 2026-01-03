@@ -12,6 +12,7 @@ const EnrollmentOverview = ({ diagnosData, ecogs }) => {
 
   return (
     <>
+      <h1>Översikt</h1>
       <p>Diagnosdatum: {diagnosData.diagnosDate}</p>
       <p>
         Högsta ECOG:{highestEcog.ecogScore} ({highestEcog.ecogDate})

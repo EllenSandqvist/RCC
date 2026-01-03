@@ -5,6 +5,13 @@ import EnrollmentOverview from "../EnrollmentOverview";
 
 import styles from "./FormTabs.module.css";
 
+const createTreatment = () => ({
+  id: uuid(),
+  type: "",
+  treatmentDate: "",
+  surgicalCode: [],
+});
+
 const createEcog = () => ({
   id: uuid(),
   ecogScore: null,
@@ -24,13 +31,30 @@ const FormTabs = () => {
     diagnosDate: "",
     diagnosBasis: "",
   });
+  const [treatments, setTreatments] = useState([createTreatment()]);
+  const [surgicalCodeInput, setSurgicalCodeInput] = useState(
+    treatments.map((t) => ({ id: t.id, input: t.surgicalCode.join(", ") }))
+  );
 
   const [ecogs, setEcogs] = useState([createEcog()]);
+
+  const [errors, setErrors] = useState({});
+
+  const addTreatment = () => {
+    const newTreatment = createTreatment();
+    setTreatments((prev) => [...prev, newTreatment]);
+    setSurgicalCodeInput((prev) => [
+      ...prev,
+      { id: newTreatment.id, input: "" },
+    ]);
+  };
+  const removeTreatment = (id) => {
+    setTreatments((prev) => prev.filter((treatment) => treatment.id !== id));
+  };
 
   const addEcog = () => {
     setEcogs((prev) => [...prev, createEcog()]);
   };
-
   const removeECOG = (id) => {
     setEcogs((prev) => prev.filter((ecog) => ecog.id !== id));
   };
@@ -43,10 +67,18 @@ const FormTabs = () => {
           setPatient={setPatient}
           diagnosData={diagnosData}
           setDiagnosData={setDiagnosData}
+          treatments={treatments}
+          setTreatments={setTreatments}
+          addTreatment={addTreatment}
+          removeTreatment={removeTreatment}
+          surgicalCodeInput={surgicalCodeInput}
+          setSurgicalCodeInput={setSurgicalCodeInput}
           ecogs={ecogs}
           setEcogs={setEcogs}
           addEcog={addEcog}
           removeECOG={removeECOG}
+          errors={errors}
+          setErrors={setErrors}
         />
       ) : (
         <EnrollmentOverview diagnosData={diagnosData} ecogs={ecogs} />
@@ -55,7 +87,7 @@ const FormTabs = () => {
   };
 
   return (
-    <section>
+    <>
       <div className={styles.tab_container}>
         <button
           className={`${styles.tab} ${
@@ -74,8 +106,8 @@ const FormTabs = () => {
           <h3>Canceranmälan</h3>
         </button>
       </div>
-      <div className={styles.project_content}>{renderContent()}</div>
-    </section>
+      <section className={styles.tab_content}>{renderContent()}</section>
+    </>
   );
 };
 

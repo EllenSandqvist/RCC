@@ -1,12 +1,13 @@
-import InputField from "./InputField";
+import InputField from "../InputField";
+import styles from "./PatientFields.module.css";
 
 const PatientFields = ({
   patient,
   setPatient,
-  errors,
   clearErrorOnChange,
   validateInput,
   setToast,
+  errors,
 }) => {
   const handlePatientChange = ({ target }) => {
     const { value, name } = target;
@@ -16,7 +17,7 @@ const PatientFields = ({
     setPatient((prev) => ({ ...prev, [name]: value }));
   };
   return (
-    <>
+    <div className={styles.patient_fields}>
       <h3>Patientuppgifter</h3>
       <label>
         Personnummer:
@@ -57,7 +58,7 @@ const PatientFields = ({
         />
       </label>
       {errors.lastName && <p>{errors.lastName}</p>}
-    </>
+    </div>
   );
 };
 

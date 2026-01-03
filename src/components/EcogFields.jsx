@@ -43,7 +43,7 @@ const EcogFields = ({
     <>
       <h3>Allmäntillstånd (ECOG)</h3>
       {ecogs.map((ecog, ecogIndex) => (
-        <div key={ecogIndex} className={`ecogDiv-${ecogIndex}`}>
+        <div key={ecog.id} className={`ecogDiv-${ecogIndex}`}>
           <p>ECOG {ecogIndex + 1}</p>
           <label>
             Datum:

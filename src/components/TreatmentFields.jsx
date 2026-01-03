@@ -29,11 +29,11 @@ const TreatmentFields = ({
 
     if (name === "surgicalCode") {
       setSurgicalCodeInput((prev) =>
-        prev.map((input) => {
-          if (input.id !== dataset.id) return input;
+        prev.map((inputObj) => {
+          if (inputObj.id !== dataset.id) return inputObj;
           return {
-            ...input,
-            [name]: value,
+            ...inputObj,
+            input: value,
           };
         })
       );
@@ -69,7 +69,7 @@ const TreatmentFields = ({
         Vid kirurgi: Om flera operationskoder anges ska de separeras med komma.
       </p>
       {treatments.map((treatment, index) => (
-        <div key={index}>
+        <div key={treatment.id}>
           <p>Behandling {index + 1}</p>
           <label>
             Datum:
@@ -139,9 +139,12 @@ const TreatmentFields = ({
                   name="surgicalCode"
                   data-id={treatment.id}
                   data-name={`surgicalCode-${treatment.id}`}
-                  value={surgicalCodeInput.input}
+                  value={
+                    surgicalCodeInput.find((input) => input.id === treatment.id)
+                      ?.input || ""
+                  }
                   onChange={handleChangeTreatment}
-                  placeholder="ex. AB1234, HA1254, QB2233"
+                  placeholder="ex. AB1234, HA1254"
                   onBlur={(e) =>
                     validateSurgicalCode(
                       e.target.name,
