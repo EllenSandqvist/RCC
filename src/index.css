@@ -4,36 +4,25 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* border: 1px solid red; */
 }
 
 :root {
   /* Base colors */
+  --soft-white: #f9f9f9;
+  --light-grey: #eaeaea;
+  --middle-grey: #d2d2d2;
+  --dark-grey: #5d5d5d;
   --primary-dark: #171717;
-  --secondary-grey: #5d5d5d;
-  --background-grey-light: #ececec;
-  --background-color-lightest: #fff;
+  --background-blue: #0f5aa3;
 
   /* Accent colors */
-  /* --accent-color: #fef100;
-  --accent-outline: #fccb4f; */
-
-  /* Complement colors */
-  --tertiary-purple: #cfb6ee;
-  --tertiary-outline: #9c7fbf;
-  --pastel-mint: #c3f0d4;
-  --pastel-mint-outline: #739680;
+  --accent-error: #c12121;
+  --accent-success: #4caf50;
+  --accent-blue: #00458a;
 
   /* Fonts */
   --font-heading: "Segoe UI", Tahoma, Geneva, sans-serif;
   --font-base: Calibri, "Times new roman", sans-serif;
-}
-
-/* LÄGG TILL ACCENT-OUTLINE FÄRG! */
-*:focus-visible {
-  outline: 3px solid var(--accent-outline);
-  outline-offset: 2px;
-  border-radius: 2px;
 }
 
 html {
@@ -43,26 +32,50 @@ html {
 body {
   font-family: var(--font-base);
   line-height: 1.5;
-  background-color: var(--background-grey-light);
+  background-color: var(--background-blue);
   color: var(--primary-dark);
 }
 
 .page-wrapper {
-  max-width: 1400px;
+  max-width: 1100px;
   width: 100%;
   margin: 0 auto;
-  background-color: var(--background-color-lightest);
+  background-color: var(--background-blue);
 }
 
 main {
   margin: 5em 0;
   border: 1px solid var(--primary-dark);
-  border-radius: 2px;
+  border-radius: 4px;
+  position: relative;
+  background-color: var(--soft-white);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--font-heading);
+}
+
+h1 {
+  margin-bottom: 0.3em;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin: 1.2em 0 0.6em 0;
 }
 
 button {
   cursor: pointer;
   padding: 2px 5px;
+}
+
+button:hover {
+  background-color: var(--middle-grey);
+  border-radius: 4px;
 }
 
 label {
@@ -71,6 +84,94 @@ label {
 
 input,
 select {
-  margin: 0 0.25em;
-  padding: 2px 5px;
+  margin: 0 0.8em 0 0.2em;
+  padding: 2.5px 5px;
+}
+
+input[type="date"] {
+  padding: 1.4px 5px;
+}
+
+section {
+  margin: 2.5em 3.5em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.delete-line-btn {
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+}
+
+.save-button {
+  background-color: var(--background-blue);
+  border-color: var(--accent-blue);
+  border-radius: 4px;
+  color: white;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+.save-button:hover {
+  background-color: var(--accent-blue);
+}
+
+.save-form-button {
+  align-self: flex-end;
+}
+
+.question-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 0.3em;
+}
+
+.error {
+  border: 3px solid var(--accent-error);
+}
+
+.error-text {
+  color: var(--accent-error);
+}
+
+.treatment-h2 {
+  margin-bottom: 0.2em;
+}
+
+.treatment-div,
+.ecog-div {
+  margin: 1em 0;
+}
+
+.ecog-value-text {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
+.ecog-group {
+  align-items: end;
+  margin-top: 0;
+}
+
+.ecog-options-div {
+  display: flex;
+  height: 40px;
+  align-items: start;
+}
+
+.ecog-options {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.ecog-div input {
+  margin: 0 1em;
+  padding: 0;
 }

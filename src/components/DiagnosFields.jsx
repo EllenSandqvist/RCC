@@ -1,7 +1,3 @@
-import InputField from "./InputField";
-//FLYTTA ERROR STYLING TILL GLOBAL STYLING FIL!
-import styles from "./EnrollmentForm/EnrollmentForm.module.css";
-
 const DiagnosFields = ({
   diagnosData,
   setDiagnosData,
@@ -19,46 +15,48 @@ const DiagnosFields = ({
     setDiagnosData((prev) => ({ ...prev, [name]: value }));
   };
   return (
-    <>
-      <h3>Diagnosuppgifter</h3>
-      <label>
-        Diagnosdatum:
-        <InputField
-          type="date"
-          name="diagnosDate"
-          category="diagnos"
-          value={diagnosData.diagnosDate}
-          handleChange={handleDiagnosChange}
-          handleBlur={(e) => validateInput(e.target.value, e.target.name)}
-          errors={errors}
-          max={today}
-          required
-        />
-      </label>
-      {errors.diagnosDate && <p>{errors.diagnosDate}</p>}
+    <div>
+      <h2>Diagnosuppgifter</h2>
+      <div className="question-group">
+        <label>
+          Diagnosdatum:
+          <input
+            type="date"
+            name="diagnosDate"
+            value={diagnosData.diagnosDate}
+            onChange={handleDiagnosChange}
+            onBlur={(e) => validateInput(e.target.value, e.target.name)}
+            className={errors["diagnosDate"] ? "error" : ""}
+            max={today}
+            required
+          />
+        </label>
 
-      <label>
-        Grund för diagnos:
-        <select
-          name="diagnosBasis"
-          data-category="diagnos"
-          value={diagnosData.diagnosBasis}
-          onChange={handleDiagnosChange}
-          onBlur={(e) => validateInput(e.target.value, e.target.name)}
-          className={errors["diagnosBasis"] ? styles.error : ""}
-          required
-        >
-          <option value="" disabled>
-            --- Välj ett alternativ ---
-          </option>
-          <option value="pad">PAD</option>
-          <option value="cytologi">Cytologi</option>
-          <option value="x-ray">Röntgen</option>
-          <option value="clinicalExam">Klinisk undersökning</option>
-        </select>
-      </label>
-      {errors.diagnosBasis && <p>{errors.diagnosBasis}</p>}
-    </>
+        <label>
+          Grund för diagnos:
+          <select
+            name="diagnosBasis"
+            value={diagnosData.diagnosBasis}
+            onChange={handleDiagnosChange}
+            onBlur={(e) => validateInput(e.target.value, e.target.name)}
+            className={errors["diagnosBasis"] ? "error" : ""}
+            required
+          >
+            <option value="" disabled>
+              --- Välj ett alternativ ---
+            </option>
+            <option value="pad">PAD</option>
+            <option value="cytologi">Cytologi</option>
+            <option value="x-ray">Röntgen</option>
+            <option value="clinicalExam">Klinisk undersökning</option>
+          </select>
+        </label>
+      </div>
+      {errors.diagnosDate && <p className="error-text">{errors.diagnosDate}</p>}
+      {errors.diagnosBasis && (
+        <p className="error-text">{errors.diagnosBasis}</p>
+      )}
+    </div>
   );
 };
 

@@ -11,13 +11,13 @@ const EnrollmentOverview = ({ diagnosData, ecogs }) => {
   }, [ecogs]);
 
   return (
-    <>
+    <section>
       <h1>Översikt</h1>
       <p>Diagnosdatum: {diagnosData.diagnosDate}</p>
       <p>
         Högsta ECOG:{highestEcog.ecogScore} ({highestEcog.ecogDate})
       </p>
-    </>
+    </section>
   );
 };
 

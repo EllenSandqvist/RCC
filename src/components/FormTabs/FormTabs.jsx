@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
-import EnrollmentForm from "../EnrollmentForm/EnrollmentForm";
+import EnrollmentForm from "../EnrollmentForm";
 import EnrollmentOverview from "../EnrollmentOverview";
 
 import styles from "./FormTabs.module.css";
@@ -95,7 +95,7 @@ const FormTabs = () => {
           }`}
           onClick={() => setActiveTab("form")}
         >
-          <h3>Formulär</h3>
+          <h3 className={styles.tab_text}>Formulär</h3>
         </button>
         <button
           className={`${styles.tab} ${
@@ -103,10 +103,10 @@ const FormTabs = () => {
           }`}
           onClick={() => setActiveTab("overview")}
         >
-          <h3>Canceranmälan</h3>
+          <h3 className={styles.tab_text}>Canceranmälan</h3>
         </button>
       </div>
-      <section className={styles.tab_content}>{renderContent()}</section>
+      <>{renderContent()}</>
     </>
   );
 };

@@ -1,11 +1,11 @@
-import { useState } from "react";
-import useValidation from "../../hooks/useValidation.js";
-import PatientFields from "../PatientFields/PatientFields.jsx";
-import DiagnosFields from "../DiagnosFields.jsx";
-import TreatmentFields from "../TreatmentFields.jsx";
-import EcogFields from "../EcogFields.jsx";
-import Toast from "../Toast/Toast.jsx";
-import ConfirmModal from "../ConfirmModal/ConfirmModal.jsx";
+import { useEffect, useState } from "react";
+import useValidation from "../hooks/useValidation.js";
+import PatientFields from "./PatientFields.jsx";
+import DiagnosFields from "./DiagnosFields.jsx";
+import TreatmentFields from "./TreatmentFields.jsx";
+import EcogFields from "./EcogFields.jsx";
+import Toast from "./Toast/Toast.jsx";
+import ConfirmModal from "./ConfirmModal/ConfirmModal.jsx";
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -35,10 +35,6 @@ const EnrollmentForm = ({
   errors,
   setErrors,
 }) => {
-  // const [surgicalCodeInput, setSurgicalCodeInput] = useState(
-  //   treatments.map((t) => ({ id: t.id, input: "" }))
-  // );
-
   const [toast, setToast] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -49,6 +45,18 @@ const EnrollmentForm = ({
     validateEcog,
     clearErrorOnChange,
   } = useValidation({ errors, setErrors });
+
+  useEffect(() => {
+    if (showModal) {
+      //Prevent background scroll when modal is open
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    } else {
+      // Restore scroll when modal closes
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+  }, [showModal]);
 
   // Function to build final javaScript Object:
   const buildFormData = () => ({
@@ -87,13 +95,15 @@ const EnrollmentForm = ({
   };
 
   return (
-    <>
+    <section>
       <form onSubmit={handleSubmit}>
         <h1>Registreringsformulär</h1>
         <p>
-          För att kunna spara formuläret måste alla fält vara ifyllda.
-          Behandlings- eller ECOG-rader som inte behövs ska tas bort innan
-          sparning.
+          <i>
+            För att kunna spara formuläret måste alla fält vara ifyllda.
+            Behandlings- eller ECOG-rader som inte behövs ska tas bort innan
+            sparning.
+          </i>
         </p>
 
         <PatientFields
@@ -142,7 +152,9 @@ const EnrollmentForm = ({
           errors={errors}
         />
 
-        <button type="submit">Spara</button>
+        <button type="submit" className="save-button save-form-button">
+          Spara
+        </button>
       </form>
       {toast && (
         <Toast
@@ -158,7 +170,7 @@ const EnrollmentForm = ({
           onClose={() => setShowModal(false)}
         />
       )}
-    </>
+    </section>
   );
 };
 
