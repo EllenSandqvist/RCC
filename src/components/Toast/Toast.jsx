@@ -1,5 +1,6 @@
+import { IoCloseSharp } from "react-icons/io5";
+
 import styles from "./Toast.module.css";
-import { IoClose } from "react-icons/io5";
 
 const Toast = ({ type, onClose, message }) => {
   const typeStyle = type === "error" ? styles.error : styles.success;
@@ -9,7 +10,7 @@ const Toast = ({ type, onClose, message }) => {
         <p>{message}</p>
       </div>
       <button className={styles.close_btn} onClick={onClose}>
-        <IoClose />
+        <IoCloseSharp className={styles.close_icon} />
       </button>
     </div>
   );

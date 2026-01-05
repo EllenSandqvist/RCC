@@ -68,6 +68,10 @@ h2 {
   margin: 1.2em 0 0.6em 0;
 }
 
+i {
+  font-size: 1.05rem;
+}
+
 button {
   cursor: pointer;
   padding: 2px 5px;
@@ -125,6 +129,32 @@ form {
   align-self: flex-end;
 }
 
+/* .close-btn {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  right: 0.2em;
+  top: 0.2em;
+  height: 45px;
+  width: 45px;
+  border: none;
+  background-color: #fff;
+  font-size: 1.5rem;
+}
+
+.close-btn:hover {
+  transform: scale(1.2);
+  background-color: #fff;
+}
+
+.toast-close-btn {
+  background-color: var(--accent-error);
+  color: #fff;
+}
+
+.toast-close-btn:hover {
+  background-color: var(--accent-error);
+} */
 .question-group {
   display: flex;
   flex-wrap: wrap;
@@ -174,4 +204,8 @@ form {
 .ecog-div input {
   margin: 0 1em;
   padding: 0;
+}
+
+.overview-text {
+  font-size: 1.05rem;
 }

@@ -1,3 +1,5 @@
+import { IoCloseSharp } from "react-icons/io5";
+
 import styles from "./ConfirmModal.module.css";
 
 const displayNames = {
@@ -14,6 +16,10 @@ const ConfirmModal = ({ formData, saveForm, onClose }) => {
   return (
     <div id="greetings" className={styles.modal_backdrop}>
       <div className={styles.modal_content}>
+        <button type="button" className={styles.close_btn} onClick={onClose}>
+          <IoCloseSharp />
+        </button>
+
         <p className={styles.confirm_text}>
           Kontrollera den imatade datan innan du sparar.
         </p>

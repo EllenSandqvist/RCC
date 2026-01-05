@@ -81,7 +81,11 @@ const FormTabs = () => {
           setErrors={setErrors}
         />
       ) : (
-        <EnrollmentOverview diagnosData={diagnosData} ecogs={ecogs} />
+        <EnrollmentOverview
+          patient={patient}
+          diagnosData={diagnosData}
+          ecogs={ecogs}
+        />
       );
     }
   };

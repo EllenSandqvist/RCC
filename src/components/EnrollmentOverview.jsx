@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-const EnrollmentOverview = ({ diagnosData, ecogs }) => {
+const EnrollmentOverview = ({ patient, diagnosData, ecogs }) => {
   const highestEcog = useMemo(() => {
     return ecogs.reduce(
       (max, curr) => {
@@ -13,9 +13,18 @@ const EnrollmentOverview = ({ diagnosData, ecogs }) => {
   return (
     <section>
       <h1>Översikt</h1>
-      <p>Diagnosdatum: {diagnosData.diagnosDate}</p>
-      <p>
-        Högsta ECOG:{highestEcog.ecogScore} ({highestEcog.ecogDate})
+      {patient.firstName && patient.lastName && (
+        <h2>
+          {patient.firstName} {patient.lastName} - {patient.personalNum}
+        </h2>
+      )}
+
+      <p className="overview-text">
+        <b>Diagnosdatum:</b> {diagnosData.diagnosDate}
+      </p>
+      <p className="overview-text">
+        <b>Högsta ECOG:</b> {highestEcog.ecogScore}
+        {highestEcog.ecogDate && <span> ({highestEcog.ecogDate})</span>}
       </p>
     </section>
   );

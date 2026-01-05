@@ -164,7 +164,7 @@ const TreatmentFields = ({
               type="button"
               className="delete-line-btn"
               onClick={() => handleRemoveTreatment(treatment.id)}
-              title="Delete treatment"
+              title="Ta bort behandling"
             >
               <FaRegTrashAlt />
             </button>
@@ -185,7 +185,7 @@ const TreatmentFields = ({
         </div>
       ))}
       <button type="button" onClick={() => addTreatment()}>
-        Lägg till ny rad +
+        Lägg till ny behandling +
       </button>
     </div>
   );

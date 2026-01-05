@@ -90,7 +90,7 @@ const EcogFields = ({
             <button
               type="button"
               className="delete-line-btn"
-              title="Delete ECOG"
+              title="Ta bort ECOG"
               onClick={() => handleRemoveEcog(ecog.id)}
             >
               <FaRegTrashAlt />
@@ -106,7 +106,7 @@ const EcogFields = ({
       ))}
 
       <button type="button" onClick={addEcog}>
-        Lägg till ny rad +
+        Lägg till ny ECOG +
       </button>
     </div>
   );
