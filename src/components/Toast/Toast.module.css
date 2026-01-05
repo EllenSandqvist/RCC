@@ -1,0 +1,48 @@
+.toast {
+  position: fixed;
+  top: 1.5em;
+  right: 50%;
+  transform: translateX(50%);
+  border-radius: 0.5em;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-size: 1.05rem;
+}
+
+.error {
+  background-color: var(--accent-error);
+}
+
+.success {
+  background-color: var(--accent-success);
+}
+
+.toast_message {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 1.5em 5em;
+}
+
+.close_btn {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  right: 0.2em;
+  top: 0.2em;
+  height: 30px;
+  width: 30px;
+  border: none;
+  background-color: transparent;
+  font-size: 1.3rem;
+}
+
+.close_btn:hover {
+  background-color: transparent;
+  transform: scale(1.1);
+}
+
+.close_icon {
+  background-color: #efefef;
+  border-radius: 2px;
+}

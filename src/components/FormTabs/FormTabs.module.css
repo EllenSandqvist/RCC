@@ -1,0 +1,26 @@
+.tab_container {
+  display: flex;
+  position: absolute;
+  top: -1.78em;
+  left: 0.7em;
+}
+
+.tab {
+  color: var(--primary-dark);
+  font-size: 0.8rem;
+  border: 1px solid var(--primary-dark);
+}
+
+.tab_active {
+  font-size: 0.95rem;
+  background-color: var(--soft-white);
+  border-bottom: var(--soft-white);
+}
+
+.tab_text {
+  margin-top: 0;
+}
+
+.tab:hover {
+  background-color: var(--soft-white);
+}

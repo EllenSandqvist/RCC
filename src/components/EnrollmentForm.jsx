@@ -1,0 +1,189 @@
+import { useEffect, useState } from "react";
+import useValidation from "../hooks/useValidation.js";
+import PatientFields from "./PatientFields.jsx";
+import DiagnosFields from "./DiagnosFields.jsx";
+import TreatmentFields from "./TreatmentFields.jsx";
+import EcogFields from "./EcogFields.jsx";
+import Toast from "./Toast/Toast.jsx";
+import ConfirmModal from "./ConfirmModal/ConfirmModal.jsx";
+
+const today = new Date().toISOString().slice(0, 10);
+
+const toastMessage = {
+  error:
+    "Formuläret är inte korrekt ifyllt. Rätta de rödmarkerade fälten innan du sparar.",
+  success: "Formuläret har sparats.",
+};
+
+let formData;
+
+const EnrollmentForm = ({
+  patient,
+  setPatient,
+  diagnosData,
+  setDiagnosData,
+  treatments,
+  setTreatments,
+  addTreatment,
+  removeTreatment,
+  surgicalCodeInput,
+  setSurgicalCodeInput,
+  ecogs,
+  setEcogs,
+  addEcog,
+  removeECOG,
+  errors,
+  setErrors,
+  resetStates,
+}) => {
+  const [toast, setToast] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const {
+    validateInput,
+    validateTreatment,
+    validateSurgicalCode,
+    validateEcog,
+    clearErrorOnChange,
+  } = useValidation({ errors, setErrors });
+
+  //useEffect to prevent background scroll when modal is open
+  useEffect(() => {
+    if (showModal) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+  }, [showModal]);
+
+  //useEffect to remove success toast after 3s
+  useEffect(() => {
+    if (toast === null || toast.type === "error") {
+      return;
+    }
+    const timeoutId = setTimeout(() => setToast(null), 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [toast]);
+
+  // Function to build final javaScript Object:
+  const buildFormData = () => ({
+    personalNum: patient.personalNum,
+    firstName: patient.firstName,
+    lastName: patient.lastName,
+    diagnosData,
+    treatments: treatments.map(({ type, treatmentDate, surgicalCode }) => ({
+      type,
+      treatmentDate,
+      surgicalProcedureCode: surgicalCode,
+    })),
+    ecogs: ecogs.map(({ ecogDate, ecogScore }) => ({ ecogDate, ecogScore })),
+  });
+
+  // --- Handler for submit ---
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (Object.keys(errors).length > 0) {
+      setToast({ type: "error", message: toastMessage.error });
+      return;
+    }
+
+    setToast(null);
+    formData = buildFormData();
+
+    // Show modal with entered data
+    setShowModal(true);
+  };
+
+  const saveForm = () => {
+    setShowModal(false);
+    window.inca = formData;
+    setToast({ type: "success", message: toastMessage.success });
+
+    resetStates();
+  };
+
+  return (
+    <section>
+      <form onSubmit={handleSubmit}>
+        <h1>Registreringsformulär</h1>
+        <p>
+          <i>
+            För att kunna spara formuläret måste alla fält vara ifyllda.
+            Behandlings- eller ECOG-rader som inte behövs ska tas bort innan
+            sparning.
+          </i>
+        </p>
+
+        <PatientFields
+          patient={patient}
+          setPatient={setPatient}
+          clearErrorOnChange={clearErrorOnChange}
+          validateInput={validateInput}
+          setToast={setToast}
+          errors={errors}
+        />
+
+        <DiagnosFields
+          diagnosData={diagnosData}
+          setDiagnosData={setDiagnosData}
+          clearErrorOnChange={clearErrorOnChange}
+          today={today}
+          validateInput={validateInput}
+          setToast={setToast}
+          errors={errors}
+        />
+
+        <TreatmentFields
+          treatments={treatments}
+          today={today}
+          clearErrorOnChange={clearErrorOnChange}
+          validateTreatment={validateTreatment}
+          surgicalCodeInput={surgicalCodeInput}
+          setSurgicalCodeInput={setSurgicalCodeInput}
+          validateSurgicalCode={validateSurgicalCode}
+          setTreatments={setTreatments}
+          addTreatment={addTreatment}
+          removeTreatment={removeTreatment}
+          setToast={setToast}
+          errors={errors}
+        />
+
+        <EcogFields
+          ecogs={ecogs}
+          setEcogs={setEcogs}
+          today={today}
+          clearErrorOnChange={clearErrorOnChange}
+          validateEcog={validateEcog}
+          addEcog={addEcog}
+          removeECOG={removeECOG}
+          setToast={setToast}
+          errors={errors}
+        />
+
+        <button type="submit" className="save-button save-form-button">
+          Spara
+        </button>
+      </form>
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          formData={formData}
+          saveForm={saveForm}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+    </section>
+  );
+};
+
+export default EnrollmentForm;

@@ -1,10 +1,12 @@
-import FormTabs from "../components/FormTabs/FormTabs";
+import FormTabs from "./components/FormTabs/FormTabs";
 
 function App() {
   return (
-    <>
-      <FormTabs />
-    </>
+    <div className="page-wrapper">
+      <main>
+        <FormTabs />
+      </main>
+    </div>
   );
 }
 
