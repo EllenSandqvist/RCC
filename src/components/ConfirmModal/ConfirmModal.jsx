@@ -14,7 +14,7 @@ const displayNames = {
 
 const ConfirmModal = ({ formData, saveForm, onClose }) => {
   return (
-    <div id="greetings" className={styles.modal_backdrop}>
+    <div className={styles.modal_backdrop}>
       <div className={styles.modal_content}>
         <button type="button" className={styles.close_btn} onClick={onClose}>
           <IoCloseSharp />
@@ -40,7 +40,7 @@ const ConfirmModal = ({ formData, saveForm, onClose }) => {
               <b>Diagnosdatum:</b> {formData.diagnosData.diagnosDate}
             </p>
             <p>
-              <b>Diagnosgrund:</b>{" "}
+              <b>Diagnosgrund: </b>
               {displayNames[formData.diagnosData.diagnosBasis]}
             </p>
           </div>
@@ -58,7 +58,7 @@ const ConfirmModal = ({ formData, saveForm, onClose }) => {
                     </p>
                     {surgicalProcedureCode.length > 0 && (
                       <p>
-                        <b>Operationskoder:</b>{" "}
+                        <b>Operationskoder: </b>
                         {surgicalProcedureCode.join(", ")}
                       </p>
                     )}

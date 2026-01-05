@@ -34,6 +34,7 @@ const EnrollmentForm = ({
   removeECOG,
   errors,
   setErrors,
+  resetStates,
 }) => {
   const [toast, setToast] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -46,17 +47,26 @@ const EnrollmentForm = ({
     clearErrorOnChange,
   } = useValidation({ errors, setErrors });
 
+  //useEffect to prevent background scroll when modal is open
   useEffect(() => {
     if (showModal) {
-      //Prevent background scroll when modal is open
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
     } else {
-      // Restore scroll when modal closes
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     }
   }, [showModal]);
+
+  //useEffect to remove success toast after 3s
+  useEffect(() => {
+    if (toast === null || toast.type === "error") {
+      return;
+    }
+    const timeoutId = setTimeout(() => setToast(null), 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [toast]);
 
   // Function to build final javaScript Object:
   const buildFormData = () => ({
@@ -84,14 +94,16 @@ const EnrollmentForm = ({
     setToast(null);
     formData = buildFormData();
 
-    // Visa modal med sammanställd data
+    // Show modal with entered data
     setShowModal(true);
   };
 
   const saveForm = () => {
     setShowModal(false);
-    setToast({ type: "success", message: toastMessage.success });
     window.inca = formData;
+    setToast({ type: "success", message: toastMessage.success });
+
+    resetStates();
   };
 
   return (
@@ -175,24 +187,3 @@ const EnrollmentForm = ({
 };
 
 export default EnrollmentForm;
-
-//   type IncaFormData = {
-//     personalNum: string;
-//     firstName: string;
-//     lastName: string;
-//     diagnos: {
-//       diagnosDate: string;
-//       diagnosBasis: "PAD" | "cytologi" | "X-ray" | "clinical examination";
-//     };
-//     treatments: {
-//       type: "surgery" | "radiotherapy" | "chemotherapy";
-//       treatmentDate: string;
-//       surgicalProcedureCode?: string[];
-//     }[];
-//     ecog: {
-//       ecogScore: 0 | 1 | 2 | 3 | 4 | 5;
-//       ecogDate: string;
-//     }[];
-//   };
-
-// export default IncaFormData;

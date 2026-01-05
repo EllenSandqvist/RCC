@@ -33,7 +33,7 @@ const FormTabs = () => {
   });
   const [treatments, setTreatments] = useState([createTreatment()]);
   const [surgicalCodeInput, setSurgicalCodeInput] = useState(
-    treatments.map((t) => ({ id: t.id, input: t.surgicalCode.join(", ") }))
+    treatments.map((t) => ({ id: t.id, input: "" }))
   );
 
   const [ecogs, setEcogs] = useState([createEcog()]);
@@ -48,6 +48,7 @@ const FormTabs = () => {
       { id: newTreatment.id, input: "" },
     ]);
   };
+
   const removeTreatment = (id) => {
     setTreatments((prev) => prev.filter((treatment) => treatment.id !== id));
   };
@@ -55,8 +56,32 @@ const FormTabs = () => {
   const addEcog = () => {
     setEcogs((prev) => [...prev, createEcog()]);
   };
+
   const removeECOG = (id) => {
     setEcogs((prev) => prev.filter((ecog) => ecog.id !== id));
+  };
+
+  const resetStates = () => {
+    const newTreatment = createTreatment();
+    setPatient({
+      personalNum: "",
+      firstName: "",
+      lastName: "",
+    });
+
+    setDiagnosData({
+      diagnosDate: "",
+      diagnosBasis: "",
+    });
+
+    setTreatments([newTreatment]);
+    setSurgicalCodeInput([
+      {
+        id: newTreatment.id,
+        input: "",
+      },
+    ]);
+    setEcogs([createEcog()]);
   };
 
   const renderContent = () => {
@@ -79,6 +104,7 @@ const FormTabs = () => {
           removeECOG={removeECOG}
           errors={errors}
           setErrors={setErrors}
+          resetStates={resetStates}
         />
       ) : (
         <EnrollmentOverview

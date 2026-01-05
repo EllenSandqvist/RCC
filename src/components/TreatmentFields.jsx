@@ -137,8 +137,8 @@ const TreatmentFields = ({
                     data-name={`surgicalCode-${treatment.id}`}
                     value={
                       surgicalCodeInput.find(
-                        (input) => input.id === treatment.id
-                      )?.input || ""
+                        (inputObj) => inputObj.id === treatment.id
+                      )?.input
                     }
                     onChange={handleChangeTreatment}
                     placeholder="ex. AB1234, HA1254"
@@ -184,7 +184,7 @@ const TreatmentFields = ({
           )}
         </div>
       ))}
-      <button type="button" onClick={() => addTreatment()}>
+      <button type="button" onClick={addTreatment}>
         Lägg till ny behandling +
       </button>
     </div>
