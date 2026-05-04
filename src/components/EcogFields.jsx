@@ -71,7 +71,7 @@ const EcogFields = ({
                     type="radio"
                     data-id={ecog.id}
                     name={`ecogScore-${ecog.id}`}
-                    id={`ecogScore-${ecog.id}`}
+                    id={`ecogScore-${ecog.id}-${ecogVal}`}
                     data-name="ecogScore"
                     value={ecogVal}
                     checked={ecog.ecogScore === ecogVal}
@@ -82,7 +82,9 @@ const EcogFields = ({
                     className={errors[`ecogScore-${ecog.id}`] ? "error" : ""}
                     required
                   />
-                  <label htmlFor={`ecogScore-${ecog.id}`}>{ecogVal}</label>
+                  <label htmlFor={`ecogScore-${ecog.id}-${ecogVal}`}>
+                    {ecogVal}
+                  </label>
                 </div>
               ))}
             </div>

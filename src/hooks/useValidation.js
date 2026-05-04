@@ -70,7 +70,11 @@ const useValidation = ({ errors, setErrors }) => {
     let message;
     let codeArray;
 
-    if (typeof value !== "string" || value.trim() === "") {
+    if (
+      typeof value !== "string" ||
+      value.trim() === "" ||
+      value.trim() === ","
+    ) {
       message = `${displayNames[name]} är obligatoriskt`;
     } else {
       const valueArray = value.split(",");
