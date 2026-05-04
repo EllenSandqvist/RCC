@@ -23,4 +23,5 @@
 
 .tab:hover {
   background-color: var(--soft-white);
+  border-radius: 0;
 }
